@@ -1,0 +1,299 @@
+/* ==========================================================================
+   Ruthvik Interior Studios - Mobile Homepage Scrolling & Hero Transition Fix
+   Isolated mobile-only overrides for smooth homepage scrolling and hero transitions.
+   Desktop experience (min-width: 993px) remains completely unaffected.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Mobile Viewports (<= 992px)
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 992px) {
+  /* 1. RESTORE FULL DOCUMENT SCROLLING
+        Extend mobile hero scroll height to provide comfortable, deliberate pacing
+        across all 4 curated scenes (Living -> Bedroom -> Dining -> Kitchen). */
+  .hero-scroll-sequence {
+    height: 300vh !important;
+    position: relative;
+    overflow: visible !important;
+  }
+
+  .hero-sticky-viewport {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  /* 2. REMOVE TOUCH & SCROLL INTERCEPTION
+        CRITICAL FIX: Remove internal overflow-y: auto on .hero-sticky-wrap.
+        Allowing touch gestures to scroll the document window naturally,
+        driving hero-scroll progress and extending to subsequent sections. */
+  .hero-sticky-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: visible !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: auto !important;
+    pointer-events: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding-top: clamp(3.75rem, 6vh, 4.75rem) !important;
+    padding-bottom: 1rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-sticky-wrap * {
+    pointer-events: auto;
+  }
+
+  /* 3. HERO FOREGROUND GRID
+        Center content cleanly in the mobile viewport. */
+  .hero-fg-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 520px !important;
+    margin: 0 auto !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    gap: 0.65rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-fg-content {
+    min-height: auto !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+
+  /* 4. SCENE 0 (INITIAL LANDING SCENE) TYPOGRAPHY & ACTIONS
+        Compact, refined proportions so both the hero introduction and the consultation
+        form fit comfortably within the initial mobile viewport without truncation. */
+  .hero-fg-slide[data-slide="0"] {
+    text-align: left;
+  }
+
+  .hero-fg-slide[data-slide="0"] .hero-eyebrow {
+    font-size: 0.6875rem !important;
+    letter-spacing: 0.16em !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .hero-fg-slide[data-slide="0"] .hero-fg-title {
+    font-size: clamp(1.4rem, 5.2vw, 1.85rem) !important;
+    margin-bottom: 0.25rem !important;
+    line-height: 1.12 !important;
+  }
+
+  .hero-fg-slide[data-slide="0"] .hero-fg-desc {
+    font-size: 0.8125rem !important;
+    line-height: 1.35 !important;
+    margin-bottom: 0.45rem !important;
+    max-width: 44ch !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .hero-fg-slide[data-slide="0"] .hero-fg-actions {
+    display: flex !important;
+    gap: 0.5rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .hero-fg-slide[data-slide="0"] .hero-fg-actions .btn {
+    padding: 0.35rem 0.75rem !important;
+    font-size: 0.75rem !important;
+    min-height: 32px !important;
+    height: 32px !important;
+    line-height: 1 !important;
+  }
+
+  /* 5. SCENES 1, 2, 3 (BEDROOM, DINING, KITCHEN)
+        When the form hides, the foreground typography expands with generous,
+        grand editorial proportions over the full room photography. */
+  .hero-fg-slide:not([data-slide="0"]) {
+    text-align: left;
+    padding-top: 1rem;
+  }
+
+  .hero-fg-slide:not([data-slide="0"]) .hero-eyebrow {
+    font-size: 0.75rem !important;
+    letter-spacing: 0.18em !important;
+    margin-bottom: 0.65rem !important;
+  }
+
+  .hero-fg-slide:not([data-slide="0"]) .hero-fg-title {
+    font-size: clamp(1.85rem, 6.5vw, 2.6rem) !important;
+    margin-bottom: 0.75rem !important;
+    line-height: 1.15 !important;
+  }
+
+  .hero-fg-slide:not([data-slide="0"]) .hero-fg-desc {
+    font-size: 0.95rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 1.25rem !important;
+    max-width: 46ch !important;
+    display: block !important;
+  }
+
+  .hero-fg-slide:not([data-slide="0"]) .hero-fg-actions .btn {
+    padding: 0.55rem 1.15rem !important;
+    font-size: 0.85rem !important;
+    min-height: 40px !important;
+  }
+
+  /* 6. CONSULTATION FORM PANEL
+        Visible in Scene 0 (initial scene).
+        Smoothly hides and collapses during Scenes 1, 2, and 3. */
+  .hero-form-panel {
+    width: 100% !important;
+    max-width: 480px !important;
+    margin: 0 auto !important;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transform-origin: center top;
+    transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                transform 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                visibility 0.35s cubic-bezier(0.25, 1, 0.5, 1),
+                max-height 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .hero-form-card {
+    padding: 0.85rem 1rem 0.75rem !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.97) !important;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.22) !important;
+  }
+
+  .hero-form-header {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .hero-form-header h2 {
+    font-size: 1.05rem !important;
+    margin-bottom: 0.15rem !important;
+  }
+
+  .hero-form-header p {
+    font-size: 0.75rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Efficient 2-column layout for Phone/Email and Location/Typology */
+  .hero-form-card .form-field {
+    margin-bottom: 0.45rem !important;
+  }
+
+  .hero-form-card .form-label {
+    font-size: 0.7rem !important;
+    margin-bottom: 0.15rem !important;
+    font-weight: 600 !important;
+  }
+
+  .hero-form-card .form-input,
+  .hero-form-card .form-select {
+    padding: 0.45rem 0.65rem !important;
+    font-size: 0.8rem !important;
+    min-height: 34px !important;
+    height: 34px !important;
+    border-radius: 4px !important;
+  }
+
+  .hero-form-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem !important;
+  }
+
+  .hero-form-card .btn-full {
+    min-height: 38px !important;
+    height: 38px !important;
+    padding: 0.5rem 0.85rem !important;
+    font-size: 0.8125rem !important;
+    margin-top: 0.2rem !important;
+  }
+
+  .hero-form-legal {
+    font-size: 0.6875rem !important;
+    margin-top: 0.35rem !important;
+    line-height: 1.25 !important;
+  }
+
+  /* 7. FORM HIDDEN STATE DURING SCENES 1, 2, 3 ON MOBILE
+        Supported via both JavaScript class (.hero-form-hidden),
+        active-slide data attribute, and CSS :has() selector.
+        Removes keyboard focus and pointer events when visually hidden. */
+  .hero-form-panel.hero-form-hidden,
+  .hero-scroll-sequence[data-active-slide="1"] .hero-form-panel,
+  .hero-scroll-sequence[data-active-slide="2"] .hero-form-panel,
+  .hero-scroll-sequence[data-active-slide="3"] .hero-form-panel,
+  .hero-fg-grid:has(.hero-fg-slide--active:not([data-slide="0"])) .hero-form-panel {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(16px) !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Narrow Mobile Screens (<= 380px)
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 380px) {
+  .hero-sticky-wrap {
+    padding-top: 3.5rem !important;
+  }
+
+  .hero-fg-slide[data-slide="0"] .hero-fg-title {
+    font-size: 1.3rem !important;
+  }
+
+  .hero-fg-slide[data-slide="0"] .hero-fg-desc {
+    font-size: 0.75rem !important;
+    -webkit-line-clamp: 2;
+  }
+
+  .hero-form-card {
+    padding: 0.75rem 0.75rem 0.65rem !important;
+  }
+
+  .hero-form-header h2 {
+    font-size: 0.98rem !important;
+  }
+
+  .hero-form-header p {
+    display: none !important; /* Conserve vertical space on very narrow viewports */
+  }
+
+  .hero-form-card .form-input,
+  .hero-form-card .form-select {
+    min-height: 32px !important;
+    height: 32px !important;
+    font-size: 0.75rem !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility: Prefers Reduced Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .hero-form-panel {
+    transition: none !important;
+  }
+}
